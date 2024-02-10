@@ -223,8 +223,8 @@ async def _raw_update_task(bot: Inquisitor, game: Game):
 
     query = """
         UPDATE inquisitor.tracked_games
-        WHERE game_name = $1
         SET current_turn = $2
+        WHERE game_name = $1
     """
 
     await bot.pool.execute(query, game.game_name, turn.number)
@@ -252,6 +252,8 @@ async def _raw_update_task(bot: Inquisitor, game: Game):
 
 # This is wrapped in a `Loop` later, when we have the refresh frequency value available.
 async def _update_loop(bot: Inquisitor):
+    await bot.wait_until_ready()
+
     query = """
         SELECT game_name, current_turn, guild_id, announcement_channel, announcement_role
         FROM inquisitor.tracked_games
