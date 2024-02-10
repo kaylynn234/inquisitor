@@ -12,8 +12,10 @@ WORKDIR /app
 COPY pyproject.toml poetry.lock ./
 RUN poetry install --without dev --no-root && rm -rf $POETRY_CACHE_DIR
 
-COPY launch.py inquisitor ./
+# Poetry needs README.md for... some reason
+COPY README.md /app/
+COPY inquisitor/ /app/inquisitor/
 
 RUN poetry install --without dev
 
-ENTRYPOINT ["poetry", "run", "python", "launch.py"]
+ENTRYPOINT ["poetry", "run", "python", "-m", "inquisitor"]

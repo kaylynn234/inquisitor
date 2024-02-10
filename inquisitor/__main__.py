@@ -3,8 +3,9 @@ import logging
 
 import asyncpg
 from aiohttp import ClientSession
+import cattrs
 
-from inquisitor import Config, Inquisitor
+from . import Config, Inquisitor
 
 
 LOGGER = logging.getLogger("inquisitor")
@@ -18,12 +19,14 @@ async def main():
     except Exception as error:
         return LOGGER.error("unable to load configuration", exc_info=error)
 
+    database_config = cattrs.unstructure(config.database)
+
     async with (
-        asyncpg.create_pool(**vars(config.database)) as pool,
+        asyncpg.create_pool(**database_config) as pool,
         ClientSession() as session,
         Inquisitor(config, pool, session) as bot,
     ):
-        await bot.load_extension("inquisitor.ext.turn_tracking")
+        await bot.load_extension(".ext.turn_tracking", package="inquisitor")
         await bot.start(config.bot.token)
 
 
