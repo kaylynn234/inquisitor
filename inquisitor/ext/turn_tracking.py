@@ -41,7 +41,7 @@ class TurnTracking(Cog, name=COG_NAME):
         self.update_loop = tasks.loop(minutes=bot.config.bot.refresh_frequency)(_update_loop)
 
     async def cog_load(self) -> None:
-        self.update_loop.start()
+        self.update_loop.start(self.bot)
 
     async def cog_unload(self) -> None:
         self.update_loop.stop()
