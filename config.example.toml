@@ -1,0 +1,10 @@
+[bot]
+token = "..."  # Required. Your discord bot token.
+refresh_frequency = 15  # Optional; defaults to 15. How often (in minutes) turn statuses are checked.
+
+[database]
+host = "..."  # Required. The hnost address of the Postgres database server.
+port = 5432  # Required. The port the database server is running on.
+user = "..."  # Optional; defaults to the `postgres` user. The database user to connect with.
+password = "..."  # Optional; defaults to an empty string. The password for the specified database user.
+database = "..."  # Optional; defaults to the `postgres` database. The specific database instance to connect to.
