@@ -182,7 +182,7 @@ async def _check_turn_status(bot: Inquisitor, game_name: str, current_turn: int)
             raise GameNotFound(game_name)
 
         response.raise_for_status()
-        page = BeautifulSoup(await response.text())
+        page = BeautifulSoup(await response.text(), "html.parser")
 
     turn_element = page.find(class_="blackbolddata")
 
