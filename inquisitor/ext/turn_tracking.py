@@ -74,7 +74,7 @@ class TurnTracking(Cog, name=COG_NAME):
                 announcement_channel,
                 announcement_role)
             VALUES ($1, $2, $3, $4, $5)
-            ON CONFLICT DO UPDATE
+            ON CONFLICT (game_name) DO UPDATE
             SET current_turn = $2, guild_id = $3, announcement_channel = $4, announcement_role = $5
         """
 
