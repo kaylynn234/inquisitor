@@ -4,6 +4,8 @@ services:
     build: ./
     volumes:
       - ./config.toml:/app/config.toml
+    depends_on:
+      - postgres
 
   postgres:
     image: postgres:16-bookworm
