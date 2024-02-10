@@ -140,8 +140,12 @@ class TurnTracking(Cog, name=COG_NAME):
 
         if not names:
             await ctx.send("No games are being tracked in this server.")
-        else:
-            await ctx.send(f"Currently tracking **{len(names)}** games in this server: {formatted_names}")
+            return
+
+        # Awful, evil hack, but it works
+        plural = "s" * (len(names) > 1)
+
+        await ctx.send(f"Currently tracking **{len(names)}** game{plural} in this server: {formatted_names}")
 
 
 @attrs.define()
