@@ -26,6 +26,7 @@ async def main():
         ClientSession() as session,
         Inquisitor(config, pool, session) as bot,
     ):
+        await bot.load_extension(".ext.game_utils", package="inquisitor")
         await bot.load_extension(".ext.turn_tracking", package="inquisitor")
         await bot.start(config.bot.token)
 
