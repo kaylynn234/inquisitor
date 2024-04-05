@@ -24,6 +24,16 @@ class GameNotFound(GameError):
         )
 
 
+class GameNotReady(GameError):
+    """The specified game is still being set up."""
+
+    def __init__(self, game_name: str) -> None:
+        super().__init__(
+            f"the game named {game_name} is still in the setup phase",
+            game_name=game_name,
+        )
+
+
 class StatusParseError(GameError):
     """The game status page could not be parsed."""
 

@@ -16,6 +16,7 @@ from yarl import URL
 
 from ..bot import Inquisitor
 from ..error import *
+from ..error import GameNotReady
 
 
 LOGGER = logging.getLogger("inquisitor.turn_tracking")
@@ -188,8 +189,11 @@ async def _check_turn_status(bot: Inquisitor, game_name: str, current_turn: int)
         response.raise_for_status()
         page = BeautifulSoup(await response.text(), "html.parser")
 
-    turn_element = page.find(class_="blackbolddata")
+    setup_element = page.find(name="td", string=re.compile("setup"))
+    if setup_element is not None:
+        raise GameNotReady(game_name)
 
+    turn_element = page.find(class_="blackbolddata")
     if not isinstance(turn_element, Tag):
         raise StatusParseError(game_name)
 
